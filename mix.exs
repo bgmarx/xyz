@@ -18,7 +18,7 @@ defmodule Xyz.Mixfile do
                           "coveralls.html": :test],
       start_permanent: Mix.env == :prod,
       test_coverage: [tool: ExCoveralls],
-      version: "0.1.0",
+      version: "0.1.1",
     ]
   end
 
