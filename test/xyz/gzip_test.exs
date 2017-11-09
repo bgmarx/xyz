@@ -14,7 +14,7 @@ defmodule Xyz.GzipTest do
       |> send_resp(200, "Hello")
 
     assert resp.req_headers == [{"content-type", "application/json"}]
-    assert resp.resp_body   == "Hello"
+    assert resp.resp_body == "Hello"
   end
 
   test "gzips resp.body if 'gzip, deflate' is present in 'accept-encoding' header" do
@@ -28,14 +28,18 @@ defmodule Xyz.GzipTest do
       |> Xyz.Gzip.call(opts)
       |> send_resp(200, "Hello")
 
-    assert resp.req_headers           == [{"accept-encoding", "gzip, deflate"}]
-    assert resp.resp_headers          == [{"cache-control", "max-age=0, private, must-revalidate"},
-                                          {"content-encoding", "gzip"}]
-    assert resp.resp_body             == zipped_hello
+    assert resp.req_headers == [{"accept-encoding", "gzip, deflate"}]
+
+    assert resp.resp_headers == [
+             {"cache-control", "max-age=0, private, must-revalidate"},
+             {"content-encoding", "gzip"}
+           ]
+
+    assert resp.resp_body == zipped_hello
     assert :zlib.gunzip(zipped_hello) == "Hello"
   end
 
-    test "gzips resp.body if 'application/gzip' is present in 'accept-encoding' header" do
+  test "gzips resp.body if 'application/gzip' is present in 'accept-encoding' header" do
     zipped_hello = :zlib.gzip("Hello")
 
     opts = Xyz.Gzip.init([])
@@ -46,10 +50,14 @@ defmodule Xyz.GzipTest do
       |> Xyz.Gzip.call(opts)
       |> send_resp(200, "Hello")
 
-    assert resp.req_headers           == [{"accept-encoding", "application/gzip"}]
-    assert resp.resp_headers          == [{"cache-control", "max-age=0, private, must-revalidate"},
-                                          {"content-encoding", "gzip"}]
-    assert resp.resp_body             == zipped_hello
+    assert resp.req_headers == [{"accept-encoding", "application/gzip"}]
+
+    assert resp.resp_headers == [
+             {"cache-control", "max-age=0, private, must-revalidate"},
+             {"content-encoding", "gzip"}
+           ]
+
+    assert resp.resp_body == zipped_hello
     assert :zlib.gunzip(zipped_hello) == "Hello"
   end
 end

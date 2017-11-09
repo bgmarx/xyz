@@ -19,14 +19,15 @@ defmodule Xyz.Gzip do
     conn
     |> get_req_header("accept-encoding")
     |> Enum.join(",")
-    |> String.downcase
+    |> String.downcase()
     |> String.contains?("gzip")
     |> gzip_if_present(conn)
   end
 
-  defp gzip_if_present(true, conn)  do
+  defp gzip_if_present(true, conn) do
     register_before_send(conn, &zip_response/1)
   end
+
   defp gzip_if_present(false, conn), do: conn
 
   defp zip_response(conn) do
