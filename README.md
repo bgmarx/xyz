@@ -3,6 +3,7 @@
 **TODO: Add description**
 
 [![Build Status](https://travis-ci.org/bgmarx/xyz.svg?branch=master)](https://travis-ci.org/bgmarx/xyz)
+[![codecov](https://codecov.io/gh/bgmarx/xyz/branch/master/graph/badge.svg)](https://codecov.io/gh/bgmarx/xyz)
 
 ## Installation
 
